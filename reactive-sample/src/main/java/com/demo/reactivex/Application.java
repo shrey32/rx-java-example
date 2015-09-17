@@ -24,6 +24,10 @@ public class Application {
 		fourth();
 		// Fifth
 		fifth();
+		// Sixth
+		sixth();
+		// Seven
+		seven();
 	}
 
 	/**
@@ -123,5 +127,26 @@ public class Application {
 		Observable.just("Hello, world!").map(s -> s.hashCode())
 				.map(i -> Integer.toString(i))
 				.subscribe(s -> System.out.println(s));
+	}
+
+	private static void sixth() {
+		Observable.just(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+				.filter(integer -> integer % 2 == 0)
+				.subscribe(System.out::println);
+	}
+
+	private static void seven() {
+		Observable
+				.just(1, 2, 3, 4, 5)
+				.groupBy(integer -> integer % 2 == 0)
+				.subscribe(
+						grouped -> {
+							grouped.toList().subscribe(
+									integers -> {
+										System.out.println(integers
+												+ " (Even: " + grouped.getKey()
+												+ ")");
+									});
+						});
 	}
 }
